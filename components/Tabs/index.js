@@ -13,7 +13,6 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
     .then(res => {
         res.data.topics.forEach(topic => {
             firstLocation.appendChild(createTabs(topic));
-            debugger
         })
         return firstLocation;
     })

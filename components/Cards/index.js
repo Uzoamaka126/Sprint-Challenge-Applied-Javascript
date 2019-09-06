@@ -21,10 +21,9 @@ const articles = document.querySelector('.cardss');
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(response => {
-        let newResponse = response.data.articles.map(article => {
+        response.data.articles.javascript.forEach(article => {
             articles.appendChild(createCards(article));
         })
-
         return newResponse;
     })
 
