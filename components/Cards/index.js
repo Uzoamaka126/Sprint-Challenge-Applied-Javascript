@@ -17,35 +17,57 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
-const articles = document.querySelector('.cardss');
+
+let getCardTitle = [];
+let getCardArticles = []
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(response => {
         response.data.articles.javascript.forEach(article => {
-            articles.appendChild(createCards(article));
+            getCardTitle.push(Object.keys(response.data.articles));
+            getCardArticles.push(response.data.articles);
+            // console.log(getCardTitle);
+            // console.log(getCardArticles);
         })
-        return newResponse;
+    })
+    .then(() => {
+        getCardTitle[0].forEach((title) => {
+            let getArticleContents = getCardArticles[0][title];
+            console.log(getArticleContents);
+
+            getArticleContents.forEach((item) => {
+                let newCard = createCards(item);
+                console.log(newCard)
+
+                newCard.setAttribute("data-group", title);
+                document.querySelector(".cards-container").appendChild(newCard);
+            })
+        })
     })
 
     function createCards(tab) {
-        const tabDiv = document.createElement('div');
-        tabDiv.classList.add('card');
-        tabDiv.textContent = tab
-
+        const cardDiv = document.createElement('div');
         const headlineDiv = document.createElement('div');
-        headlineDiv.classList.add('headline');
-
         const authorDiv = document.createElement('div');
-        authorDiv.classList.add('author');
-
         const imgDiv = document.createElement('div');
-        imgDiv.classList.add('img-container');
-
         const image = document.createElement('img');
-
         const authorSpan = document.createElement('span');
 
+        cardDiv.classList.add('card');
+        headlineDiv.classList.add('headline');
+        authorDiv.classList.add('author');
+        imgDiv.classList.add('img-container');
 
-        return tabDiv; 
+        image.src = tab.authorPhoto;
+        headlineDiv.textContent = tab.headline;
+        authorSpan.textContent = 'Written by:' + tab.authorName;
+
+        imgDiv.appendChild(image);
+        authorDiv.appendChild(imgDiv);
+        authorDiv.appendChild(authorSpan);
+
+        cardDiv.appendChild(headlineDiv);
+        cardDiv.appendChild(authorDiv)
+
+        return cardDiv; 
     }
-

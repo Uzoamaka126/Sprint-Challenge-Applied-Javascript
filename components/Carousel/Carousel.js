@@ -25,13 +25,17 @@ function createCarousel() {
   leftButton.classList.add('left-button');
 
   const img1 = document.createElement('img');
+  img1.src = "./assets/carousel/mountains.jpeg";
+  img1.classList.add('active')
 
-  const img2 = document.createElement('img'); 
+  const img2 = document.createElement('img');
+  img2.src =  "./assets/carousel/computer.jpeg";
 
   const img3 = document.createElement('img');
+  img3.src = "./assets/carousel/trees.jpeg";
 
   const img4 = document.createElement('img');
-  
+  img4.src = "./assets/carousel/turntable.jpeg";
 
   const rightButton = document.createElement('div');
   rightButton.classList.add('right-button');
@@ -43,6 +47,37 @@ function createCarousel() {
   carouselDiv.appendChild(img4)
   carouselDiv.appendChild(rightButton);
 
+  var carouselItems = carouselDiv.querySelectorAll('img');
+  var counter = 0;
+  var amount = carouselItems.length;
+  var active = carouselItems[0];
+  
+  carouselDiv.classList.add('slider');
+
+  // Create a new function for this
+  const rotateCarousel = function(direction) {
+    active.classList.remove('active');
+    counter = counter + direction;
+    if (direction === -1 && counter < 0) {
+      counter = amount - 1;
+    }
+    if (direction === 1 && !items[counter]) {
+      counter = 0;
+    }
+    active = items[counter];
+    active.classList.add('active');
+  }
+  rightButton.addEventListener('click', function(event) {
+    rotateCarousel(1);
+  });
+  leftButton.addEventListener('click', function(event) {
+    rotateCarousel(-1);
+  });
+  debugger
+  rotateCarousel(0);
+
   return carouselDiv;
 }
-document.querySelector('.carousel-container').appendChild(createCarousel());
+const getCarouselContainer = document.querySelector('.carousel-container');
+
+getCarouselContainer.appendChild(carouselDiv);
