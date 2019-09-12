@@ -5,6 +5,10 @@
   position: relative;
   overflow: hidden;
   margin-top: 16px;
+
+  &.slider {
+    height: 150px;
+  }
   @media(min-width: 1200px){
     width: 1200px;
   }
@@ -37,5 +41,9 @@
   img {
     .width-100();
     display: none;
+
+    &.active {
+      display: block;
+    }
   }
 }
